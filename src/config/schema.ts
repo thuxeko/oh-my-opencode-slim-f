@@ -238,6 +238,26 @@ export const PluginConfigSchema = z.object({
   manualPlan: ManualPlanSchema.optional(),
   presets: z.record(z.string(), PresetSchema).optional(),
   agents: z.record(z.string(), AgentOverrideConfigSchema).optional(),
+  // Default model for all agents — used only when agent has no explicit model override.
+  // Falls through to fallback.chains for runtime failover.
+  default: z.object({
+    model: z
+      .union([
+        z.string(),
+        z.array(
+          z.union([
+            z.string(),
+            z.object({
+              id: z.string(),
+              variant: z.string().optional(),
+            }),
+          ]),
+        ),
+      ])
+      .describe('Default model for all agents (provider/model format)'),
+  })
+    .optional()
+    .describe('Default model applied to all agents without an explicit model override'),
   disabled_mcps: z.array(z.string()).optional(),
   // Multiplexer config (new unified config - preferred)
   multiplexer: MultiplexerConfigSchema.optional(),

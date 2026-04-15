@@ -1,6 +1,7 @@
 import type { AgentConfig as SDKAgentConfig } from '@opencode-ai/sdk/v2';
 import { getSkillPermissionsForAgent } from '../cli/skills';
 import {
+  AGENTS_WITH_HARDCODED_DEFAULTS,
   type AgentOverrideConfig,
   DEFAULT_MODELS,
   getAgentOverride,
@@ -122,6 +123,47 @@ const SUBAGENT_FACTORIES: Record<SubagentName, AgentFactory> = {
 // Public API
 
 /**
+ * Resolve the model for a subagent, respecting config priority:
+ * 1. Agent-specific override (agents.<name>.model)
+ * 2. config.default.model (fallback for all agents)
+ * 3. config.council.master.model (for council/councillor/council-master)
+ * 4. DEFAULT_MODELS hardcoded (last resort)
+ */
+function resolveSubagentModel(
+  name: SubagentName,
+  config?: PluginConfig,
+): string {
+  const agentOverride = getAgentOverride(config, name)?.model;
+  if (agentOverride !== undefined) {
+    if (Array.isArray(agentOverride)) {
+      const first = agentOverride[0];
+      return typeof first === 'string' ? first : first?.id ?? '';
+    }
+    return agentOverride;
+  }
+
+  const defaultModel = config?.default?.model;
+  if (defaultModel !== undefined) {
+    if (Array.isArray(defaultModel)) {
+      const first = defaultModel[0];
+      return typeof first === 'string' ? first : first?.id ?? '';
+    }
+    return defaultModel;
+  }
+
+  if (
+    (name === 'council' ||
+      name === 'council-master' ||
+      name === 'councillor') &&
+    config?.council?.master?.model
+  ) {
+    return config.council.master.model;
+  }
+
+  return DEFAULT_MODELS[name] ?? '';
+}
+
+/**
  * Create all agent definitions with optional configuration overrides.
  * Instantiates the orchestrator and all subagents, applying user config and defaults.
  *
@@ -133,29 +175,16 @@ export function createAgents(config?: PluginConfig): AgentDefinition[] {
   // existing users who don't have fixer in their config yet
   const getModelForAgent = (name: SubagentName): string => {
     if (name === 'fixer' && !getAgentOverride(config, 'fixer')?.model) {
+      // fixer inherits from librarian override/default, or falls back to librarian's DEFAULT_MODEL
+      const librarianModel = resolveSubagentModel('librarian', config);
+      // Only inherit if librarian got a non-hardcoded value
       const librarianOverride = getAgentOverride(config, 'librarian')?.model;
-      let librarianModel: string | undefined;
-      if (Array.isArray(librarianOverride)) {
-        const first = librarianOverride[0];
-        librarianModel = typeof first === 'string' ? first : first?.id;
-      } else {
-        librarianModel = librarianOverride;
-      }
-      return librarianModel ?? (DEFAULT_MODELS.librarian as string);
+      const hasLibrarianOverride =
+        librarianOverride !== undefined ||
+        config?.default?.model !== undefined;
+      return hasLibrarianOverride ? librarianModel : (DEFAULT_MODELS.librarian as string);
     }
-    // Council and council-master agents' model comes from
-    // config.council.master.model so the TUI validates the user's
-    // actual model, not the hardcoded default
-    if (
-      (name === 'council' ||
-        name === 'council-master' ||
-        name === 'councillor') &&
-      config?.council?.master?.model
-    ) {
-      return config.council.master.model;
-    }
-    // Subagents always have a defined default model; cast is safe here
-    return DEFAULT_MODELS[name] as string;
+    return resolveSubagentModel(name, config);
   };
 
   // 1. Gather all sub-agent definitions with custom prompts
@@ -181,11 +210,25 @@ export function createAgents(config?: PluginConfig): AgentDefinition[] {
   });
 
   // 3. Create Orchestrator (with its own overrides and custom prompts)
-  // DEFAULT_MODELS.orchestrator is undefined; model is resolved via override or
-  // left unset so the runtime chat.message hook can pick it from _modelArray.
+  // Model resolution priority: agent override > config.default > undefined
   const orchestratorOverride = getAgentOverride(config, 'orchestrator');
-  const orchestratorModel =
-    orchestratorOverride?.model ?? DEFAULT_MODELS.orchestrator;
+  const orchestratorModel = (() => {
+    if (orchestratorOverride?.model !== undefined) {
+      if (Array.isArray(orchestratorOverride.model)) {
+        const first = orchestratorOverride.model[0];
+        return typeof first === 'string' ? first : first?.id;
+      }
+      return orchestratorOverride.model;
+    }
+    if (config?.default?.model !== undefined) {
+      if (Array.isArray(config.default.model)) {
+        const first = config.default.model[0];
+        return typeof first === 'string' ? first : first?.id;
+      }
+      return config.default.model;
+    }
+    return undefined;
+  })();
   const orchestratorPrompts = loadAgentPrompt('orchestrator', config?.preset);
   const orchestrator = createOrchestratorAgent(
     orchestratorModel,

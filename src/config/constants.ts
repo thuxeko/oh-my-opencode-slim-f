@@ -22,6 +22,19 @@ export const ALL_AGENT_NAMES = [ORCHESTRATOR_NAME, ...SUBAGENT_NAMES] as const;
 // Agent name type (for use in DEFAULT_MODELS)
 export type AgentName = (typeof ALL_AGENT_NAMES)[number];
 
+// Agents that have hardcoded default models (excludes orchestrator)
+// These agents use DEFAULT_MODELS as final fallback after config and fallback.chains
+export const AGENTS_WITH_HARDCODED_DEFAULTS: readonly AgentName[] = [
+  'oracle',
+  'librarian',
+  'explorer',
+  'designer',
+  'fixer',
+  'council',
+  'councillor',
+  'council-master',
+] as const;
+
 // Subagent delegation rules: which agents can spawn which subagents
 // orchestrator: can spawn all subagents (full delegation)
 // fixer: leaf node — prompt forbids delegation; use grep/glob for lookups

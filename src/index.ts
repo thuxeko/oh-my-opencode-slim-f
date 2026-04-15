@@ -51,29 +51,38 @@ const OhMyOpenCodeLite: Plugin = async (ctx) => {
   }
   // Build runtime fallback chains for all foreground agents.
   // Each chain is an ordered list of model strings to try when the current
-  // model is rate-limited. Seeds from _modelArray entries (when the user
-  // configures model as an array), then appends fallback.chains entries.
+  // model is rate-limited.
+  //
+  // Resolution order (highest to lowest priority):
+  // 1. fallback.chains from config (user-defined fallback)
+  // 2. _modelArray from agent definition (hardcoded defaults)
+  //
+  // This ensures user config always takes precedence over hardcoded defaults.
   const runtimeChains: Record<string, string[]> = {};
-  for (const agentDef of agentDefs) {
-    if (agentDef._modelArray?.length) {
-      runtimeChains[agentDef.name] = agentDef._modelArray.map((m) => m.id);
-    }
-  }
+
+  // Seed from fallback.chains config first (user priority)
   if (config.fallback?.enabled !== false) {
     const chains =
       (config.fallback?.chains as Record<string, string[] | undefined>) ?? {};
     for (const [agentName, chainModels] of Object.entries(chains)) {
       if (!chainModels?.length) continue;
-      const existing = runtimeChains[agentName] ?? [];
-      const seen = new Set(existing);
-      for (const m of chainModels) {
-        if (!seen.has(m)) {
-          seen.add(m);
-          existing.push(m);
-        }
-      }
-      runtimeChains[agentName] = existing;
+      runtimeChains[agentName] = [...chainModels];
     }
+  }
+
+  // Append _modelArray from agent definition ONLY if not already in chain
+  // This keeps hardcoded defaults as final fallback, not primary
+  for (const agentDef of agentDefs) {
+    if (!agentDef._modelArray?.length) continue;
+    const existing = runtimeChains[agentDef.name] ?? [];
+    const seen = new Set(existing);
+    for (const m of agentDef._modelArray) {
+      if (!seen.has(m.id)) {
+        seen.add(m.id);
+        existing.push(m.id);
+      }
+    }
+    runtimeChains[agentDef.name] = existing;
   }
 
   // Parse multiplexer config with defaults
@@ -243,53 +252,48 @@ const OhMyOpenCodeLite: Plugin = async (ctx) => {
       }
       const configAgent = opencodeConfig.agent as Record<string, unknown>;
 
-      // Model resolution for foreground agents: combine _modelArray entries
-      // with fallback.chains config, then pick the first model in the
-      // effective array for startup-time selection.
+      // Model resolution for foreground agents: resolve primary model at startup,
+      // with fallback chains for runtime failover.
       //
-      // Runtime failover on API errors (e.g. rate limits mid-conversation)
-      // is handled separately by ForegroundFallbackManager via the event hook.
+      // Resolution order (user config takes priority over hardcoded defaults):
+      // 1. fallback.chains from config (user-defined fallback for runtime failover)
+      // 2. _modelArray from agent definition (hardcoded defaults — lowest priority)
+      //
+      // For the primary model selection at startup, we prefer the first entry
+      // from fallback.chains if available, falling back to _modelArray.
+      // Runtime failover on API errors is handled by ForegroundFallbackManager.
       const fallbackChainsEnabled = config.fallback?.enabled !== false;
       const fallbackChains = fallbackChainsEnabled
         ? ((config.fallback?.chains as Record<string, string[] | undefined>) ??
           {})
         : {};
 
-      // Build effective model arrays: seed from _modelArray, then append
-      // fallback.chains entries so the resolver considers the full chain
-      // when picking the best available provider at startup.
+      // Build effective model arrays: seed from fallback.chains (user priority),
+      // then append _modelArray entries only if not already present.
       const effectiveArrays: Record<
         string,
         Array<{ id: string; variant?: string }>
       > = {};
 
-      for (const [agentName, models] of Object.entries(modelArrayMap)) {
-        effectiveArrays[agentName] = [...models];
-      }
-
+      // Seed from fallback.chains first (user-defined, higher priority)
       for (const [agentName, chainModels] of Object.entries(fallbackChains)) {
         if (!chainModels || chainModels.length === 0) continue;
+        effectiveArrays[agentName] = chainModels.map((id) => ({ id }));
+      }
 
-        if (!effectiveArrays[agentName]) {
-          // Agent has no _modelArray — seed from its current string model so
-          // the fallback chain appends after it rather than replacing it.
-          const entry = configAgent[agentName] as
-            | Record<string, unknown>
-            | undefined;
-          const currentModel =
-            typeof entry?.model === 'string' ? entry.model : undefined;
-          effectiveArrays[agentName] = currentModel
-            ? [{ id: currentModel }]
-            : [];
-        }
-
-        const seen = new Set(effectiveArrays[agentName].map((m) => m.id));
-        for (const chainModel of chainModels) {
-          if (!seen.has(chainModel)) {
-            seen.add(chainModel);
-            effectiveArrays[agentName].push({ id: chainModel });
+      // Append _modelArray from agent definition only if not already in chain
+      // (hardcoded defaults are lowest priority)
+      for (const [agentName, models] of Object.entries(modelArrayMap)) {
+        if (!models || models.length === 0) continue;
+        const existing = effectiveArrays[agentName] ?? [];
+        const seen = new Set(existing.map((m) => m.id));
+        for (const m of models) {
+          if (!seen.has(m.id)) {
+            seen.add(m.id);
+            existing.push({ id: m.id, variant: m.variant });
           }
         }
+        effectiveArrays[agentName] = existing;
       }
 
       if (Object.keys(effectiveArrays).length > 0) {
