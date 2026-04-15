@@ -209,7 +209,7 @@ Add a `$schema` reference to your config for autocomplete and inline validation:
 
 ```jsonc
 {
-  "$schema": "https://unpkg.com/oh-my-opencode-slim@latest/oh-my-opencode-slim.schema.json",
+  "$schema": "https://raw.githubusercontent.com/thuxeko/oh-my-opencode-slim-f/master/oh-my-opencode-slim.schema.json",
   // your config...
 }
 ```
