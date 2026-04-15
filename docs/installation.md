@@ -1,6 +1,6 @@
 # Installation Guide
 
-Complete installation instructions for oh-my-opencode-slim.
+Complete installation instructions for oh-my-opencode-slim-f.
 
 ## Table of Contents
 
@@ -13,28 +13,48 @@ Complete installation instructions for oh-my-opencode-slim.
 
 ## For Humans
 
+### Prerequisites
+
+- [Bun](https://bun.sh) installed
+- [OpenCode](https://opencode.ai) installed
+
 ### Quick Install
 
-Run the interactive installer:
-
 ```bash
-bunx github:thuxeko/oh-my-opencode-slim-f install
+# 1. Clone the repo
+git clone https://github.com/thuxeko/oh-my-opencode-slim-f.git
+cd oh-my-opencode-slim-f
+
+# 2. Build (required before first run)
+bun install
+bun run build
+
+# 3. Run installer
+bunx . install --default-model=YOUR_PROVIDER/YOUR_MODEL
 ```
 
-Or use non-interactive mode:
-
+**Examples:**
 ```bash
-bunx github:thuxeko/oh-my-opencode-slim-f install --no-tui --tmux=no --skills=yes
+# With default OpenAI models
+bunx . install
+
+# With your custom provider model
+bunx . install --default-model=anti/MiniMax-M2.5
+
+# Non-interactive mode with tmux and skills
+bunx . install --no-tui --tmux=yes --skills=yes
+
+# Force overwrite existing configuration
+bunx . install --reset
 ```
 
 ### Configuration Options
 
-The installer supports the following options:
-
 | Option | Description |
 |--------|-------------|
-| `--tmux=yes|no` | Enable tmux integration (yes/no) |
-| `--skills=yes|no` | Install recommended skills (yes/no) |
+| `--tmux=yes\|no` | Enable tmux integration (yes/no) |
+| `--skills=yes\|no` | Install recommended skills (yes/no) |
+| `--default-model=<id>` | Set default model for all agents (e.g. anti/MiniMax-M2.5) |
 | `--no-tui` | Non-interactive mode |
 | `--dry-run` | Simulate install without writing files |
 | `--reset` | Force overwrite of existing configuration |
@@ -50,14 +70,12 @@ By default, the installer is non-destructive. If an `oh-my-opencode-slim.json` c
 To force overwrite of your existing configuration, use the `--reset` flag:
 
 ```bash
-bunx github:thuxeko/oh-my-opencode-slim-f install --reset
+bunx . install --reset
 ```
 
 **Note:** When using `--reset`, the installer creates a `.bak` backup file before overwriting, so your previous configuration is preserved.
 
 ### After Installation
-
-The installer generates an OpenAI configuration by default (using `gpt-5.4` and `gpt-5-codex` models). To use alternative providers like Kimi, GitHub Copilot, or ZAI Coding Plan, see **[Provider Configurations](provider-configurations.md)** for step-by-step instructions.
 
 Authenticate with your provider:
 
@@ -76,14 +94,14 @@ Paste this into Claude Code, AmpCode, Cursor, or any coding agent:
 
 ```
 Install and configure by following the instructions here:
-https://refs/heads/master/thuxeko/oh-my-opencode-slim-f/refs/heads/master/README.md
+https://raw.githubusercontent.com/thuxeko/oh-my-opencode-slim-f/master/README.md
 ```
 
 ---
 
 ## For LLM Agents
 
-If you're an LLM Agent helping set up oh-my-opencode-slim, follow these steps.
+If you're an LLM Agent helping set up oh-my-opencode-slim-f, follow these steps.
 
 ### Step 1: Check OpenCode Installation
 
@@ -93,27 +111,42 @@ opencode --version
 
 If not installed, direct the user to https://opencode.ai/docs first.
 
-### Step 2: Run the Installer
+### Step 2: Clone and Build
 
-The installer generates an OpenAI configuration by default:
+The plugin needs to be built before running. Guide the user to:
 
 ```bash
-bunx github:thuxeko/oh-my-opencode-slim-f install --no-tui --tmux=no --skills=yes
+# Clone the repo
+git clone https://github.com/thuxeko/oh-my-opencode-slim-f.git
+cd oh-my-opencode-slim-f
+
+# Build
+bun install
+bun run build
+```
+
+### Step 3: Run the Installer
+
+```bash
+bunx . install --default-model=USER_PROVIDER/USER_MODEL --no-tui --tmux=no --skills=yes
 ```
 
 **Examples:**
 ```bash
-# Interactive install (asks about tmux and skills)
-bunx github:thuxeko/oh-my-opencode-slim-f install
+# Interactive install
+bunx . install
+
+# With custom provider model
+bunx . install --default-model=anti/MiniMax-M2.5 --no-tui
 
 # Non-interactive with tmux and skills
-bunx github:thuxeko/oh-my-opencode-slim-f install --no-tui --tmux=yes --skills=yes
+bunx . install --no-tui --tmux=yes --skills=yes
 
 # Non-interactive without tmux or skills
-bunx github:thuxeko/oh-my-opencode-slim-f install --no-tui --tmux=no --skills=no
+bunx . install --no-tui --tmux=no --skills=no
 
 # Force overwrite existing configuration
-bunx github:thuxeko/oh-my-opencode-slim-f install --reset
+bunx . install --reset
 ```
 
 The installer automatically:
@@ -121,7 +154,7 @@ The installer automatically:
 - Disables default OpenCode agents
 - Generates agent model mappings in `~/.config/opencode/oh-my-opencode-slim.json` (or `.jsonc`)
 
-### Step 3: Authenticate with Providers
+### Step 4: Authenticate with Providers
 
 Ask user to run the following command. Don't run it yourself, it requires user interaction.
 
@@ -130,7 +163,7 @@ opencode auth login
 # Select your provider and complete OAuth flow
 ```
 
-### Step 4: Verify Installation
+### Step 5: Verify Installation
 
 Ask the user to:
 
@@ -152,7 +185,7 @@ Verify all agents respond successfully.
 
 Check the expected config format:
 ```bash
-bunx github:thuxeko/oh-my-opencode-slim-f install --help
+bunx . install --help
 ```
 
 Then manually create the config files at:
@@ -166,7 +199,7 @@ If the installer reports that the configuration already exists, you have two opt
 
 2. **Reset configuration**: Use `--reset` to overwrite:
    ```bash
-   bunx github:thuxeko/oh-my-opencode-slim-f install --reset
+   bunx . install --reset
    ```
    A `.bak` backup file will be created automatically.
 
