@@ -23,31 +23,22 @@
 ### Quick Start
 
 ```bash
-# 1. Clone the repo
-git clone https://github.com/thuxeko/oh-my-opencode-slim-f.git
-cd oh-my-opencode-slim-f
-
-# 2. Build (required before first run)
-bun install
-bun run build
-
-# 3. Run installer from local directory
-bunx . install --default-model=YOUR_PROVIDER/YOUR_MODEL
+bunx oh-my-opencode-slim-f@latest install --default-model=YOUR_PROVIDER/YOUR_MODEL
 ```
 
 **Examples:**
 ```bash
 # With default OpenAI models
-bunx . install
+bunx oh-my-opencode-slim-f@latest install
 
 # With your custom provider model
-bunx . install --default-model=anti/MiniMax-M2.5
+bunx oh-my-opencode-slim-f@latest install --default-model=anti/MiniMax-M2.5
 
 # Non-interactive mode with tmux and skills
-bunx . install --no-tui --tmux=yes --skills=yes
+bunx oh-my-opencode-slim-f@latest install --no-tui --tmux=yes --skills=yes
 
 # Force overwrite existing configuration
-bunx . install --reset
+bunx oh-my-opencode-slim-f@latest install --reset
 ```
 
 ### For Alternative Providers
@@ -60,7 +51,7 @@ An official JSON Schema is included in the package for editor validation and aut
 
 ```jsonc
 {
-  "$schema": "https://raw.githubusercontent.com/thuxeko/oh-my-opencode-slim-f/master/oh-my-opencode-slim.schema.json",
+  "$schema": "https://unpkg.com/oh-my-opencode-slim-f@latest/oh-my-opencode-slim.schema.json",
   // your config...
 }
 ```

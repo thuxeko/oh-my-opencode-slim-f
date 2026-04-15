@@ -15,37 +15,28 @@ Complete installation instructions for oh-my-opencode-slim-f.
 
 ### Prerequisites
 
-- [Bun](https://bun.sh) installed
+- [Bun](https://bun.sh) or [npm](https://npmjs.com) installed
 - [OpenCode](https://opencode.ai) installed
 
 ### Quick Install
 
 ```bash
-# 1. Clone the repo
-git clone https://github.com/thuxeko/oh-my-opencode-slim-f.git
-cd oh-my-opencode-slim-f
-
-# 2. Build (required before first run)
-bun install
-bun run build
-
-# 3. Run installer
-bunx . install --default-model=YOUR_PROVIDER/YOUR_MODEL
+bunx oh-my-opencode-slim-f@latest install --default-model=YOUR_PROVIDER/YOUR_MODEL
 ```
 
 **Examples:**
 ```bash
 # With default OpenAI models
-bunx . install
+bunx oh-my-opencode-slim-f@latest install
 
 # With your custom provider model
-bunx . install --default-model=anti/MiniMax-M2.5
+bunx oh-my-opencode-slim-f@latest install --default-model=anti/MiniMax-M2.5
 
 # Non-interactive mode with tmux and skills
-bunx . install --no-tui --tmux=yes --skills=yes
+bunx oh-my-opencode-slim-f@latest install --no-tui --tmux=yes --skills=yes
 
 # Force overwrite existing configuration
-bunx . install --reset
+bunx oh-my-opencode-slim-f@latest install --reset
 ```
 
 ### Configuration Options
@@ -70,7 +61,7 @@ By default, the installer is non-destructive. If an `oh-my-opencode-slim.json` c
 To force overwrite of your existing configuration, use the `--reset` flag:
 
 ```bash
-bunx . install --reset
+bunx oh-my-opencode-slim-f@latest install --reset
 ```
 
 **Note:** When using `--reset`, the installer creates a `.bak` backup file before overwriting, so your previous configuration is preserved.
@@ -111,42 +102,28 @@ opencode --version
 
 If not installed, direct the user to https://opencode.ai/docs first.
 
-### Step 2: Clone and Build
-
-The plugin needs to be built before running. Guide the user to:
+### Step 2: Run the Installer
 
 ```bash
-# Clone the repo
-git clone https://github.com/thuxeko/oh-my-opencode-slim-f.git
-cd oh-my-opencode-slim-f
-
-# Build
-bun install
-bun run build
-```
-
-### Step 3: Run the Installer
-
-```bash
-bunx . install --default-model=USER_PROVIDER/USER_MODEL --no-tui --tmux=no --skills=yes
+bunx oh-my-opencode-slim-f@latest install --default-model=USER_PROVIDER/USER_MODEL --no-tui --tmux=no --skills=yes
 ```
 
 **Examples:**
 ```bash
 # Interactive install
-bunx . install
+bunx oh-my-opencode-slim-f@latest install
 
 # With custom provider model
-bunx . install --default-model=anti/MiniMax-M2.5 --no-tui
+bunx oh-my-opencode-slim-f@latest install --default-model=anti/MiniMax-M2.5 --no-tui
 
 # Non-interactive with tmux and skills
-bunx . install --no-tui --tmux=yes --skills=yes
+bunx oh-my-opencode-slim-f@latest install --no-tui --tmux=yes --skills=yes
 
 # Non-interactive without tmux or skills
-bunx . install --no-tui --tmux=no --skills=no
+bunx oh-my-opencode-slim-f@latest install --no-tui --tmux=no --skills=no
 
 # Force overwrite existing configuration
-bunx . install --reset
+bunx oh-my-opencode-slim-f@latest install --reset
 ```
 
 The installer automatically:
@@ -154,7 +131,7 @@ The installer automatically:
 - Disables default OpenCode agents
 - Generates agent model mappings in `~/.config/opencode/oh-my-opencode-slim.json` (or `.jsonc`)
 
-### Step 4: Authenticate with Providers
+### Step 3: Authenticate with Providers
 
 Ask user to run the following command. Don't run it yourself, it requires user interaction.
 
@@ -163,7 +140,7 @@ opencode auth login
 # Select your provider and complete OAuth flow
 ```
 
-### Step 5: Verify Installation
+### Step 4: Verify Installation
 
 Ask the user to:
 
@@ -185,7 +162,7 @@ Verify all agents respond successfully.
 
 Check the expected config format:
 ```bash
-bunx . install --help
+bunx oh-my-opencode-slim-f@latest install --help
 ```
 
 Then manually create the config files at:
@@ -199,7 +176,7 @@ If the installer reports that the configuration already exists, you have two opt
 
 2. **Reset configuration**: Use `--reset` to overwrite:
    ```bash
-   bunx . install --reset
+   bunx oh-my-opencode-slim-f@latest install --reset
    ```
    A `.bak` backup file will be created automatically.
 
@@ -242,7 +219,7 @@ Add a `$schema` reference to your config for autocomplete and inline validation:
 
 ```jsonc
 {
-  "$schema": "https://raw.githubusercontent.com/thuxeko/oh-my-opencode-slim-f/master/oh-my-opencode-slim.schema.json",
+  "$schema": "https://unpkg.com/oh-my-opencode-slim-f@latest/oh-my-opencode-slim.schema.json",
   // your config...
 }
 ```

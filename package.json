@@ -1,5 +1,5 @@
 {
-  "name": "oh-my-opencode-slim",
+  "name": "oh-my-opencode-slim-f",
   "version": "0.9.12",
   "description": "Lightweight agent orchestration plugin for OpenCode - a slimmed-down fork of oh-my-opencode",
   "main": "dist/index.js",
@@ -22,12 +22,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alvinunreal/oh-my-opencode-slim"
+    "url": "https://github.com/thuxeko/oh-my-opencode-slim-f"
   },
   "bugs": {
-    "url": "https://github.com/alvinunreal/oh-my-opencode-slim/issues"
+    "url": "https://github.com/thuxeko/oh-my-opencode-slim-f/issues"
   },
-  "homepage": "https://github.com/alvinunreal/oh-my-opencode-slim#readme",
+  "homepage": "https://github.com/thuxeko/oh-my-opencode-slim-f#readme",
   "files": [
     "dist",
     "src/skills",
