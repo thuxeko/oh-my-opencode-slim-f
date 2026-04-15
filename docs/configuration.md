@@ -1,6 +1,51 @@
 # Configuration Reference
 
-Complete reference for all configuration files and options in oh-my-opencode-slim.
+Complete reference for all configuration files and options in oh-my-opencode-slim-f.
+
+---
+
+## Model Resolution Priority
+
+When an agent needs a model, the plugin resolves it in this order (highest to lowest priority):
+
+```
+1. Agent-specific override  (presets.<preset>.<agent>.model)
+                            ↓
+2. Global default model     (default.model)
+                            ↓
+3. Fallback chain           (fallback.chains.<agent>)
+                            ↓
+4. Hardcoded default        (built-in DEFAULT_MODELS)
+                            ↓
+5. ERROR - no model found
+```
+
+**Example:** If you set `default.model = "anti/MiniMax-M2.5"` and don't override individual agents, all agents will use `anti/MiniMax-M2.5`.
+
+**With fallback:**
+```jsonc
+{
+  "default": {
+    "model": "anti/MiniMax-M2.5"
+  },
+  "fallback": {
+    "enabled": true,
+    "chains": {
+      "orchestrator": ["openai/gpt-5.4", "anthropic/claude-opus-4.6"]
+    }
+  }
+}
+```
+In this case:
+- Orchestrator uses `anti/MiniMax-M2.5` as primary
+- If it fails → falls back to `openai/gpt-5.4`
+- If that also fails → `anthropic/claude-opus-4.6`
+- Other agents still use `anti/MiniMax-M2.5` directly (no fallback defined for them)
+
+**Runtime behavior:**
+- `default.model` sets the **primary** model for all agents
+- `fallback.chains` defines **fallback models** tried when primary fails (rate limit, timeout, error)
+- Fallback only triggers on API errors, not on bad responses
 
 ---
 
@@ -89,6 +134,7 @@ All config files support **JSONC** (JSON with Comments):
 | `presets.<name>.<agent>.skills` | string[] | — | Skills the agent can use (`"*"`, `"!item"`, explicit list) |
 | `presets.<name>.<agent>.mcps` | string[] | — | MCPs the agent can use (`"*"`, `"!item"`, explicit list) |
 | `presets.<name>.<agent>.options` | object | — | Provider-specific model options passed to the AI SDK (e.g., `textVerbosity`, `thinking` budget) |
+| `default.model` | string \| array | — | Default model for all agents without an explicit override. Supports `provider/model` format or array for runtime failover |
 | `tmux.enabled` | boolean | `false` | Enable tmux pane spawning |
 | `tmux.layout` | string | `"main-vertical"` | Layout: `main-vertical`, `main-horizontal`, `tiled`, `even-horizontal`, `even-vertical` |
 | `tmux.main_pane_size` | number | `60` | Main pane size as percentage (20–80) |
@@ -96,7 +142,7 @@ All config files support **JSONC** (JSON with Comments):
 | `fallback.enabled` | boolean | `false` | Enable model failover on timeout/error |
 | `fallback.timeoutMs` | number | `15000` | Time before aborting and trying next model |
 | `fallback.retryDelayMs` | number | `500` | Delay between retry attempts |
-| `fallback.chains.<agent>` | string[] | — | Ordered fallback model IDs for an agent |
+| `fallback.chains.<agent>` | string[] | — | Ordered fallback model IDs for an agent (tried when primary model fails) |
 | `fallback.retry_on_empty` | boolean | `true` | Treat silent empty provider responses (0 tokens) as failures and retry. Set `false` to accept empty responses |
 | `council.master.model` | string | — | **Required if using council.** Council master model |
 | `council.master.variant` | string | — | Council master variant |
