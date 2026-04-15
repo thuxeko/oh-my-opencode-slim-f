@@ -18,13 +18,13 @@ Complete installation instructions for oh-my-opencode-slim.
 Run the interactive installer:
 
 ```bash
-bunx oh-my-opencode-slim@latest install
+bunx github:thuxeko/oh-my-opencode-slim-f install
 ```
 
 Or use non-interactive mode:
 
 ```bash
-bunx oh-my-opencode-slim@latest install --no-tui --tmux=no --skills=yes
+bunx github:thuxeko/oh-my-opencode-slim-f install --no-tui --tmux=no --skills=yes
 ```
 
 ### Configuration Options
@@ -50,7 +50,7 @@ By default, the installer is non-destructive. If an `oh-my-opencode-slim.json` c
 To force overwrite of your existing configuration, use the `--reset` flag:
 
 ```bash
-bunx oh-my-opencode-slim@latest install --reset
+bunx github:thuxeko/oh-my-opencode-slim-f install --reset
 ```
 
 **Note:** When using `--reset`, the installer creates a `.bak` backup file before overwriting, so your previous configuration is preserved.
@@ -98,22 +98,22 @@ If not installed, direct the user to https://opencode.ai/docs first.
 The installer generates an OpenAI configuration by default:
 
 ```bash
-bunx oh-my-opencode-slim@latest install --no-tui --tmux=no --skills=yes
+bunx github:thuxeko/oh-my-opencode-slim-f install --no-tui --tmux=no --skills=yes
 ```
 
 **Examples:**
 ```bash
 # Interactive install (asks about tmux and skills)
-bunx oh-my-opencode-slim@latest install
+bunx github:thuxeko/oh-my-opencode-slim-f install
 
 # Non-interactive with tmux and skills
-bunx oh-my-opencode-slim@latest install --no-tui --tmux=yes --skills=yes
+bunx github:thuxeko/oh-my-opencode-slim-f install --no-tui --tmux=yes --skills=yes
 
 # Non-interactive without tmux or skills
-bunx oh-my-opencode-slim@latest install --no-tui --tmux=no --skills=no
+bunx github:thuxeko/oh-my-opencode-slim-f install --no-tui --tmux=no --skills=no
 
 # Force overwrite existing configuration
-bunx oh-my-opencode-slim@latest install --reset
+bunx github:thuxeko/oh-my-opencode-slim-f install --reset
 ```
 
 The installer automatically:
@@ -152,7 +152,7 @@ Verify all agents respond successfully.
 
 Check the expected config format:
 ```bash
-bunx oh-my-opencode-slim@latest install --help
+bunx github:thuxeko/oh-my-opencode-slim-f install --help
 ```
 
 Then manually create the config files at:
@@ -166,7 +166,7 @@ If the installer reports that the configuration already exists, you have two opt
 
 2. **Reset configuration**: Use `--reset` to overwrite:
    ```bash
-   bunx oh-my-opencode-slim@latest install --reset
+   bunx github:thuxeko/oh-my-opencode-slim-f install --reset
    ```
    A `.bak` backup file will be created automatically.
 
