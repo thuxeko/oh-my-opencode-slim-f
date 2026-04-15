@@ -6,6 +6,7 @@ export interface InstallArgs {
   skills?: BooleanArg;
   dryRun?: boolean;
   reset?: boolean;
+  defaultModel?: string;
 }
 
 export interface OpenCodeConfig {
@@ -21,6 +22,7 @@ export interface InstallConfig {
   installCustomSkills: boolean;
   dryRun?: boolean;
   reset: boolean;
+  defaultModel?: string;
 }
 
 export interface ConfigMergeResult {

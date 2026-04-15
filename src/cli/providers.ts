@@ -49,6 +49,13 @@ export function generateLiteConfig(
     presets: {},
   };
 
+  // If --default-model was provided, add it as the global default for all agents
+  if (installConfig.defaultModel) {
+    config.default = {
+      model: installConfig.defaultModel,
+    };
+  }
+
   const createAgentConfig = (
     agentName: string,
     modelInfo: { model: string; variant?: string },

@@ -18,6 +18,8 @@ function parseArgs(args: string[]): InstallArgs {
       result.dryRun = true;
     } else if (arg === '--reset') {
       result.reset = true;
+    } else if (arg.startsWith('--default-model=')) {
+      result.defaultModel = arg.split('=')[1];
     } else if (arg === '-h' || arg === '--help') {
       printHelp();
       process.exit(0);
@@ -39,15 +41,17 @@ Options:
   --no-tui               Non-interactive mode
   --dry-run              Simulate install without writing files
   --reset                Force overwrite of existing configuration
+  --default-model=<id>   Set default model for all agents (e.g. anti/MiniMax-M2.5)
   -h, --help             Show this help message
 
 The installer generates an OpenAI configuration by default.
-For alternative providers, see docs/provider-configurations.md.
+Use --default-model to set a custom provider model for all agents.
 
 Examples:
   bunx oh-my-opencode-slim install
   bunx oh-my-opencode-slim install --no-tui --tmux=no --skills=yes
   bunx oh-my-opencode-slim install --reset
+  bunx oh-my-opencode-slim install --default-model=anti/MiniMax-M2.5
 `);
 }
 
