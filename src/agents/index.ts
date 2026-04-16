@@ -126,13 +126,14 @@ const SUBAGENT_FACTORIES: Record<SubagentName, AgentFactory> = {
  * Resolve the model for a subagent, respecting config priority:
  * 1. Agent-specific override (agents.<name>.model)
  * 2. config.default.model (fallback for all agents)
- * 3. config.council.master.model (for council/councillor/council-master)
- * 4. DEFAULT_MODELS hardcoded (last resort)
+ * 3. config.council.master.model (for council/councillor/council-master only — last resort)
+ * 4. DEFAULT_MODELS hardcoded (final fallback)
  */
 function resolveSubagentModel(
   name: SubagentName,
   config?: PluginConfig,
 ): string {
+  // 1. Agent-specific override takes highest priority
   const agentOverride = getAgentOverride(config, name)?.model;
   if (agentOverride !== undefined) {
     if (Array.isArray(agentOverride)) {
@@ -142,6 +143,7 @@ function resolveSubagentModel(
     return agentOverride;
   }
 
+  // 2. Global default.model applies to all agents (including council)
   const defaultModel = config?.default?.model;
   if (defaultModel !== undefined) {
     if (Array.isArray(defaultModel)) {
@@ -151,6 +153,8 @@ function resolveSubagentModel(
     return defaultModel;
   }
 
+  // 3. config.council.master.model is only for council-type agents,
+  //    and only as last resort if no default.model was set
   if (
     (name === 'council' ||
       name === 'council-master' ||
@@ -160,6 +164,7 @@ function resolveSubagentModel(
     return config.council.master.model;
   }
 
+  // 4. Hardcoded DEFAULT_MODELS as final fallback
   return DEFAULT_MODELS[name] ?? '';
 }
 
