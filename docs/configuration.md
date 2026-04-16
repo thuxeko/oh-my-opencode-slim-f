@@ -20,13 +20,13 @@ When an agent needs a model, the plugin resolves it in this order (highest to lo
 5. ERROR - no model found
 ```
 
-**Example:** If you set `default.model = "anti/MiniMax-M2.5"` and don't override individual agents, all agents will use `anti/MiniMax-M2.5`.
+**Example:** If you set `default.model = "antigravity/MiniMax-M2.5"` and don't override individual agents, all agents will use `antigravity/MiniMax-M2.5`.
 
 **With fallback:**
 ```jsonc
 {
   "default": {
-    "model": "anti/MiniMax-M2.5"
+    "model": "antigravity/MiniMax-M2.5"
   },
   "fallback": {
     "enabled": true,
@@ -37,10 +37,10 @@ When an agent needs a model, the plugin resolves it in this order (highest to lo
 }
 ```
 In this case:
-- Orchestrator uses `anti/MiniMax-M2.5` as primary
+- Orchestrator uses `antigravity/MiniMax-M2.5` as primary
 - If it fails → falls back to `openai/gpt-5.4`
 - If that also fails → `anthropic/claude-opus-4.6`
-- Other agents still use `anti/MiniMax-M2.5` directly (no fallback defined for them)
+- Other agents still use `antigravity/MiniMax-M2.5` directly (no fallback defined for them)
 
 **Runtime behavior:**
 - `default.model` sets the **primary** model for all agents

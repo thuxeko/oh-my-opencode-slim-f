@@ -30,7 +30,7 @@ bunx oh-my-opencode-slim-f@latest install --default-model=YOUR_PROVIDER/YOUR_MOD
 bunx oh-my-opencode-slim-f@latest install
 
 # With your custom provider model
-bunx oh-my-opencode-slim-f@latest install --default-model=anti/MiniMax-M2.5
+bunx oh-my-opencode-slim-f@latest install --default-model=antigravity/MiniMax-M2.5
 
 # Non-interactive mode with tmux and skills
 bunx oh-my-opencode-slim-f@latest install --no-tui --tmux=yes --skills=yes
@@ -45,7 +45,7 @@ bunx oh-my-opencode-slim-f@latest install --reset
 |--------|-------------|
 | `--tmux=yes\|no` | Enable tmux integration (yes/no) |
 | `--skills=yes\|no` | Install recommended skills (yes/no) |
-| `--default-model=<id>` | Set default model for all agents (e.g. anti/MiniMax-M2.5) |
+| `--default-model=<id>` | Set default model for all agents (e.g. antigravity/MiniMax-M2.5) |
 | `--no-tui` | Non-interactive mode |
 | `--dry-run` | Simulate install without writing files |
 | `--reset` | Force overwrite of existing configuration |
@@ -114,7 +114,7 @@ bunx oh-my-opencode-slim-f@latest install --default-model=USER_PROVIDER/USER_MOD
 bunx oh-my-opencode-slim-f@latest install
 
 # With custom provider model
-bunx oh-my-opencode-slim-f@latest install --default-model=anti/MiniMax-M2.5 --no-tui
+bunx oh-my-opencode-slim-f@latest install --default-model=antigravity/MiniMax-M2.5 --no-tui
 
 # Non-interactive with tmux and skills
 bunx oh-my-opencode-slim-f@latest install --no-tui --tmux=yes --skills=yes

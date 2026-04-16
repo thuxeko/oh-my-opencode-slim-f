@@ -127,7 +127,7 @@ export function generateLiteConfig(
     
     // Generate fallback config with empty chains (users can fill in later)
     config.fallback = {
-      enabled: false,
+      enabled: true,  // Enable fallback by default
       chains: {
         orchestrator: [],
         oracle: [],
@@ -168,7 +168,7 @@ export function generateLiteConfig(
     
     // Also generate fallback and council for OpenAI users
     config.fallback = {
-      enabled: false,
+      enabled: true,  // Enable fallback by default
       chains: {
         orchestrator: [],
         oracle: [],

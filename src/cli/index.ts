@@ -41,7 +41,7 @@ Options:
   --no-tui               Non-interactive mode
   --dry-run              Simulate install without writing files
   --reset                Force overwrite of existing configuration
-  --default-model=<id>   Set default model for all agents (e.g. anti/MiniMax-M2.5)
+  --default-model=<id>   Set default model for all agents (e.g. antigravity/MiniMax-M2.5)
   -h, --help             Show this help message
 
 The installer generates an OpenAI configuration by default.
@@ -51,7 +51,7 @@ Examples:
   bunx oh-my-opencode-slim-f install
   bunx oh-my-opencode-slim-f install --no-tui --tmux=no --skills=yes
   bunx oh-my-opencode-slim-f install --reset
-  bunx oh-my-opencode-slim-f install --default-model=anti/MiniMax-M2.5
+  bunx oh-my-opencode-slim-f install --default-model=antigravity/MiniMax-M2.5
 `);
 }
 

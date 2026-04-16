@@ -40,7 +40,7 @@ bunx oh-my-opencode-slim-f@latest install --default-model=YOUR_PROVIDER/YOUR_MOD
 bunx oh-my-opencode-slim-f@latest install
 
 # With your custom provider model
-bunx oh-my-opencode-slim-f@latest install --default-model=anti/MiniMax-M2.5
+bunx oh-my-opencode-slim-f@latest install --default-model=antigravity/MiniMax-M2.5
 
 # Non-interactive mode with tmux and skills
 bunx oh-my-opencode-slim-f@latest install --no-tui --tmux=yes --skills=yes
