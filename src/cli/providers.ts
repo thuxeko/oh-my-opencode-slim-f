@@ -45,16 +45,8 @@ export function generateLiteConfig(
   installConfig: InstallConfig,
 ): Record<string, unknown> {
   const config: Record<string, unknown> = {
-    preset: 'openai',
     presets: {},
   };
-
-  // If --default-model was provided, add it as the global default for all agents
-  if (installConfig.defaultModel) {
-    config.default = {
-      model: installConfig.defaultModel,
-    };
-  }
 
   const createAgentConfig = (
     agentName: string,
@@ -93,8 +85,39 @@ export function generateLiteConfig(
     );
   };
 
-  // Always use OpenAI as default
-  (config.presets as Record<string, unknown>).openai = buildPreset('openai');
+  // If --default-model was provided, create a custom preset with that model
+  if (installConfig.defaultModel) {
+    const defaultModel = installConfig.defaultModel;
+    // Create a custom preset name based on the model
+    const presetName = 'custom';
+    config.preset = presetName;
+    
+    // Create preset with the custom model for all agents
+    const customMapping = {
+      orchestrator: { model: defaultModel },
+      oracle: { model: defaultModel, variant: 'high' },
+      librarian: { model: defaultModel, variant: 'low' },
+      explorer: { model: defaultModel, variant: 'low' },
+      designer: { model: defaultModel, variant: 'medium' },
+      fixer: { model: defaultModel, variant: 'low' },
+    };
+    
+    (config.presets as Record<string, unknown>)[presetName] = Object.fromEntries(
+      Object.entries(customMapping).map(([agentName, modelInfo]) => [
+        agentName,
+        createAgentConfig(agentName, modelInfo),
+      ]),
+    );
+    
+    // Also add default.model for fallback
+    config.default = {
+      model: defaultModel,
+    };
+  } else {
+    // No --default-model, use OpenAI as default
+    config.preset = 'openai';
+    (config.presets as Record<string, unknown>).openai = buildPreset('openai');
+  }
 
   if (installConfig.hasTmux) {
     config.tmux = {

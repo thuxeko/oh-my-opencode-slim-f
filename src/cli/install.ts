@@ -98,13 +98,21 @@ function handleStepResult(
   return true;
 }
 
-function formatConfigSummary(): string {
+function formatConfigSummary(config: InstallConfig): string {
   const lines: string[] = [];
   lines.push(`${BOLD}Configuration Summary${RESET}`);
   lines.push('');
-  lines.push(`  ${BOLD}Preset:${RESET} ${BLUE}openai${RESET}`);
-  lines.push(`  ${SYMBOLS.check} OpenAI (default)`);
-  const seeDocs = 'see docs/provider-configurations.md';
+  
+  if (config.defaultModel) {
+    lines.push(`  ${BOLD}Preset:${RESET} ${BLUE}custom${RESET}`);
+    lines.push(`  ${SYMBOLS.check} ${config.defaultModel} (custom)`);
+    lines.push(`  ${DIM}All agents will use: ${config.defaultModel}${RESET}`);
+  } else {
+    lines.push(`  ${BOLD}Preset:${RESET} ${BLUE}openai${RESET}`);
+    lines.push(`  ${SYMBOLS.check} OpenAI (default)`);
+  }
+  
+  const seeDocs = 'see https://github.com/thuxeko/oh-my-opencode-slim-f/blob/master/docs/provider-configurations.md';
   lines.push(`  ${DIM}○ Kimi — ${seeDocs}${RESET}`);
   lines.push(`  ${DIM}○ GitHub Copilot — ${seeDocs}${RESET}`);
   lines.push(`  ${DIM}○ ZAI Coding Plan — ${seeDocs}${RESET}`);
@@ -227,7 +235,7 @@ async function runInstall(config: InstallConfig): Promise<number> {
 
   // Summary
   console.log();
-  console.log(formatConfigSummary());
+  console.log(formatConfigSummary(config));
   console.log();
 
   const statusMsg = isUpdate
