@@ -565,6 +565,17 @@ export class CouncilManager {
     // Build ordered list of models to try (primary first, then fallbacks)
     const attemptModels = [effectiveModel, ...fallbackModels];
 
+    // If no council master model is configured, fall back to default.model
+    if (!effectiveModel && this.config?.default?.model) {
+      const defaultModel = this.config.default.model;
+      if (typeof defaultModel === 'string') {
+        attemptModels.unshift(defaultModel);
+      } else if (Array.isArray(defaultModel) && defaultModel.length > 0) {
+        const first = defaultModel[0];
+        attemptModels.unshift(typeof first === 'string' ? first : first?.id ?? '');
+      }
+    }
+
     // Build synthesis prompt (data only — agent factory provides system prompt)
     const synthesisPrompt = formatMasterSynthesisPrompt(
       prompt,

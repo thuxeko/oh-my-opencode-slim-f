@@ -133,6 +133,54 @@ const OhMyOpenCodeLite: Plugin = async (ctx) => {
       )
     : {};
 
+  // Auto-configure council if not explicitly configured but default.model is set
+  // This allows council to work out-of-the-box with the user's default model
+  if (!config.council && config.default?.model) {
+    const defaultModel = config.default.model;
+    const modelString = typeof defaultModel === 'string' 
+      ? defaultModel 
+      : (Array.isArray(defaultModel) && defaultModel.length > 0 
+          ? (typeof defaultModel[0] === 'string' ? defaultModel[0] : defaultModel[0]?.id ?? '')
+          : '');
+    
+    if (modelString) {
+      // Create minimal council config using default.model
+      const autoCouncilConfig = {
+        ...config,
+        council: {
+          master: { model: modelString },
+          presets: {
+            default: {
+              councillors: {
+                alpha: { model: modelString },
+                beta: { model: modelString },
+                gamma: { model: modelString }
+              },
+              master: undefined
+            }
+          },
+          default_preset: 'default',
+          master_timeout: 300000,
+          councillors_timeout: 180000,
+          master_fallback: [],
+          councillor_execution_mode: 'parallel' as const,
+          councillor_retries: 3
+        }
+      };
+      
+      // Create council tools with auto-configured council
+      Object.assign(councilTools, createCouncilTool(
+        ctx,
+        new CouncilManager(
+          ctx,
+          autoCouncilConfig,
+          backgroundManager.getDepthTracker(),
+          multiplexerEnabled,
+        ),
+      ));
+    }
+  }
+
   const mcps = createBuiltinMcps(config.disabled_mcps, config.websearch);
   const webfetch = createWebfetchTool(ctx);
 
