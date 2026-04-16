@@ -125,14 +125,83 @@ export function generateLiteConfig(
     
     (config.presets as Record<string, unknown>)[presetName] = presetConfig;
     
-    // Disable fallback by default
+    // Generate fallback config with empty chains (users can fill in later)
     config.fallback = {
       enabled: false,
+      chains: {
+        orchestrator: [],
+        oracle: [],
+        librarian: [],
+        explorer: [],
+        designer: [],
+        fixer: [],
+        council: [],
+        'council-master': [],
+        councillor: []
+      }
+    };
+    
+    // Auto-configure council using default.model
+    config.council = {
+      master: { model: defaultModel },
+      presets: {
+        default: {
+          councillors: {
+            alpha: { model: defaultModel },
+            beta: { model: defaultModel },
+            gamma: { model: defaultModel }
+          },
+          master: undefined
+        }
+      },
+      default_preset: 'default',
+      master_timeout: 300000,
+      councillors_timeout: 180000,
+      master_fallback: [],
+      councillor_execution_mode: 'parallel',
+      councillor_retries: 3
     };
   } else {
     // No --default-model, use OpenAI as default with explicit models
     config.preset = 'openai';
     (config.presets as Record<string, unknown>).openai = buildPreset('openai');
+    
+    // Also generate fallback and council for OpenAI users
+    config.fallback = {
+      enabled: false,
+      chains: {
+        orchestrator: [],
+        oracle: [],
+        librarian: [],
+        explorer: [],
+        designer: [],
+        fixer: [],
+        council: [],
+        'council-master': [],
+        councillor: []
+      }
+    };
+    
+    // Council with OpenAI models
+    config.council = {
+      master: { model: 'openai/gpt-5.4' },
+      presets: {
+        default: {
+          councillors: {
+            alpha: { model: 'openai/gpt-5.4-mini' },
+            beta: { model: 'openai/gpt-5.4-mini' },
+            gamma: { model: 'openai/gpt-5.4-mini' }
+          },
+          master: undefined
+        }
+      },
+      default_preset: 'default',
+      master_timeout: 300000,
+      councillors_timeout: 180000,
+      master_fallback: [],
+      councillor_execution_mode: 'parallel',
+      councillor_retries: 3
+    };
   }
 
   if (installConfig.hasTmux) {

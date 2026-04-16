@@ -107,11 +107,14 @@ function formatConfigSummary(config: InstallConfig): string {
     lines.push(`  ${BOLD}Preset:${RESET} ${BLUE}default${RESET}`);
     lines.push(`  ${SYMBOLS.check} ${config.defaultModel} (via default.model)`);
     lines.push(`  ${DIM}All agents inherit from default.model${RESET}`);
-    lines.push(`  ${DIM}Fallback: disabled${RESET}`);
+    lines.push(`  ${DIM}Fallback: disabled (chains pre-defined)${RESET}`);
+    lines.push(`  ${DIM}Council: auto-configured with 3 councillors${RESET}`);
   } else {
     lines.push(`  ${BOLD}Preset:${RESET} ${BLUE}openai${RESET}`);
     lines.push(`  ${SYMBOLS.check} OpenAI (explicit models)`);
     lines.push(`  ${DIM}Each agent has explicit model mapping${RESET}`);
+    lines.push(`  ${DIM}Fallback: disabled (chains pre-defined)${RESET}`);
+    lines.push(`  ${DIM}Council: auto-configured with OpenAI models${RESET}`);
   }
   
   const seeDocs = 'see https://github.com/thuxeko/oh-my-opencode-slim-f/blob/master/docs/provider-configurations.md';
