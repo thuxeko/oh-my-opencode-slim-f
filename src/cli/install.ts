@@ -261,7 +261,7 @@ async function runInstall(config: InstallConfig): Promise<number> {
     'For alternative providers (Kimi, GitHub Copilot, ZAI Coding Plan)';
   console.log(`${BOLD}${altProviders}, see:${RESET}`);
   const docsUrl =
-    'https://github.com/alvinunreal/oh-my-opencode-slim-f/' +
+    'https://github.com/thuxeko/oh-my-opencode-slim-f/' +
     'blob/master/docs/provider-configurations.md';
   console.log(`  ${BLUE}${docsUrl}${RESET}`);
   console.log();
