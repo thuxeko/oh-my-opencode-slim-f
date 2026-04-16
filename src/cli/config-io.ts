@@ -21,7 +21,7 @@ import type {
   OpenCodeConfig,
 } from './types';
 
-const PACKAGE_NAME = 'oh-my-opencode-slim';
+const PACKAGE_NAME = 'oh-my-opencode-slim-f-f';
 
 function normalizePathForMatch(path: string): string {
   return path.replaceAll('\\', '/');
@@ -208,7 +208,7 @@ export async function addPluginToOpenCodeConfig(): Promise<ConfigMergeResult> {
 
     const pluginEntry = getPluginEntry();
 
-    // Remove existing oh-my-opencode-slim entries
+    // Remove existing oh-my-opencode-slim-f entries
     const filteredPlugins = plugins.filter((p) => !isPluginEntry(p));
 
     // Add fresh entry

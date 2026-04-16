@@ -1,11 +1,11 @@
 {
-  "name": "oh-my-opencode-slim-f",
+  "name": "oh-my-opencode-slim-f-f",
   "version": "0.9.13",
   "description": "Lightweight agent orchestration plugin for OpenCode - a slimmed-down fork of oh-my-opencode",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "oh-my-opencode-slim": "./dist/cli/index.js"
+    "oh-my-opencode-slim-f-f": "./dist/cli/index.js"
   },
   "type": "module",
   "license": "MIT",
@@ -22,16 +22,16 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/thuxeko/oh-my-opencode-slim-f"
+    "url": "https://github.com/thuxeko/oh-my-opencode-slim-f-f"
   },
   "bugs": {
-    "url": "https://github.com/thuxeko/oh-my-opencode-slim-f/issues"
+    "url": "https://github.com/thuxeko/oh-my-opencode-slim-f-f/issues"
   },
-  "homepage": "https://github.com/thuxeko/oh-my-opencode-slim-f#readme",
+  "homepage": "https://github.com/thuxeko/oh-my-opencode-slim-f-f#readme",
   "files": [
     "dist",
     "src/skills",
-    "oh-my-opencode-slim.schema.json",
+    "oh-my-opencode-slim-f-f.schema.json",
     "README.md",
     "LICENSE"
   ],

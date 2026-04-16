@@ -47,7 +47,7 @@ describe('config-io', () => {
     mkdirSync(dir, { recursive: true });
     writeFileSync(
       join(dir, 'package.json'),
-      JSON.stringify({ name: 'oh-my-opencode-slim' }),
+      JSON.stringify({ name: 'oh-my-opencode-slim-f' }),
     );
   }
 
@@ -119,7 +119,7 @@ describe('config-io', () => {
     paths.ensureConfigDir();
     writeFileSync(
       configPath,
-      JSON.stringify({ plugin: ['other', 'oh-my-opencode-slim@1.0.0'] }),
+      JSON.stringify({ plugin: ['other', 'oh-my-opencode-slim-f@1.0.0'] }),
     );
     process.argv[1] = '';
 
@@ -127,8 +127,8 @@ describe('config-io', () => {
     expect(result.success).toBe(true);
 
     const saved = JSON.parse(readFileSync(configPath, 'utf-8'));
-    expect(saved.plugin).toContain('oh-my-opencode-slim');
-    expect(saved.plugin).not.toContain('oh-my-opencode-slim@1.0.0');
+    expect(saved.plugin).toContain('oh-my-opencode-slim-f');
+    expect(saved.plugin).not.toContain('oh-my-opencode-slim-f@1.0.0');
     expect(saved.plugin.length).toBe(2);
   });
 
@@ -136,9 +136,9 @@ describe('config-io', () => {
     const configPath = join(tmpDir, 'opencode', 'opencode.json');
     const packageRoot = join(
       tmpDir,
-      'bunx-1000-oh-my-opencode-slim@latest',
+      'bunx-1000-oh-my-opencode-slim-f@latest',
       'node_modules',
-      'oh-my-opencode-slim',
+      'oh-my-opencode-slim-f',
     );
     paths.ensureConfigDir();
     writeFileSync(configPath, JSON.stringify({ plugin: [] }));
@@ -149,7 +149,7 @@ describe('config-io', () => {
 
     expect(result.success).toBe(true);
     const saved = JSON.parse(readFileSync(configPath, 'utf-8'));
-    expect(saved.plugin).toEqual(['oh-my-opencode-slim']);
+    expect(saved.plugin).toEqual(['oh-my-opencode-slim-f']);
   });
 
   test('addPluginToOpenCodeConfig stores local repo path for local dev paths', async () => {
@@ -204,7 +204,7 @@ describe('config-io', () => {
   });
 
   test('writeLiteConfig writes lite config with OpenAI preset', () => {
-    const litePath = join(tmpDir, 'opencode', 'oh-my-opencode-slim.json');
+    const litePath = join(tmpDir, 'opencode', 'oh-my-opencode-slim-f.json');
     paths.ensureConfigDir();
 
     const result = writeLiteConfig({
@@ -236,13 +236,13 @@ describe('config-io', () => {
 
   test('detectCurrentConfig detects installed status', () => {
     const configPath = join(tmpDir, 'opencode', 'opencode.json');
-    const litePath = join(tmpDir, 'opencode', 'oh-my-opencode-slim.json');
+    const litePath = join(tmpDir, 'opencode', 'oh-my-opencode-slim-f.json');
     paths.ensureConfigDir();
 
     writeFileSync(
       configPath,
       JSON.stringify({
-        plugin: ['oh-my-opencode-slim'],
+        plugin: ['oh-my-opencode-slim-f'],
         provider: {
           kimi: {
             npm: '@ai-sdk/openai-compatible',

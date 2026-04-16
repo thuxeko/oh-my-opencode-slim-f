@@ -31,9 +31,9 @@ function parseArgs(args: string[]): InstallArgs {
 
 function printHelp(): void {
   console.log(`
-oh-my-opencode-slim installer
+oh-my-opencode-slim-f-f installer
 
-Usage: bunx oh-my-opencode-slim install [OPTIONS]
+Usage: bunx oh-my-opencode-slim-f-f install [OPTIONS]
 
 Options:
   --tmux=yes|no          Enable tmux integration (yes/no)
@@ -48,10 +48,10 @@ The installer generates an OpenAI configuration by default.
 Use --default-model to set a custom provider model for all agents.
 
 Examples:
-  bunx oh-my-opencode-slim install
-  bunx oh-my-opencode-slim install --no-tui --tmux=no --skills=yes
-  bunx oh-my-opencode-slim install --reset
-  bunx oh-my-opencode-slim install --default-model=anti/MiniMax-M2.5
+  bunx oh-my-opencode-slim-f-f install
+  bunx oh-my-opencode-slim-f-f install --no-tui --tmux=no --skills=yes
+  bunx oh-my-opencode-slim-f-f install --reset
+  bunx oh-my-opencode-slim-f-f install --default-model=anti/MiniMax-M2.5
 `);
 }
 

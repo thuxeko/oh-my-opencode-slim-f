@@ -1,6 +1,6 @@
 # Installation Guide
 
-Complete installation instructions for oh-my-opencode-slim-f.
+Complete installation instructions for oh-my-opencode-slim-f-f.
 
 ## Table of Contents
 
@@ -52,10 +52,10 @@ bunx oh-my-opencode-slim-f@latest install --reset
 
 ### Non-Destructive Behavior
 
-By default, the installer is non-destructive. If an `oh-my-opencode-slim.json` configuration file already exists, the installer will **not** overwrite it. Instead, it will display a message:
+By default, the installer is non-destructive. If an `oh-my-opencode-slim-f.json` configuration file already exists, the installer will **not** overwrite it. Instead, it will display a message:
 
 ```
-ℹ Configuration already exists at ~/.config/opencode/oh-my-opencode-slim.json. Use --reset to overwrite.
+ℹ Configuration already exists at ~/.config/opencode/oh-my-opencode-slim-f.json. Use --reset to overwrite.
 ```
 
 To force overwrite of your existing configuration, use the `--reset` flag:
@@ -77,7 +77,7 @@ opencode auth login
 
 Once authenticated, run OpenCode and `ping all agents` to verify all agents respond.
 
-> **💡 Tip: Models are fully customizable.** The installer sets sensible defaults, but you can assign *any* model to *any* agent. Edit `~/.config/opencode/oh-my-opencode-slim.json` (or `.jsonc` for comments support) to override models, adjust reasoning effort, or disable agents entirely.
+> **💡 Tip: Models are fully customizable.** The installer sets sensible defaults, but you can assign *any* model to *any* agent. Edit `~/.config/opencode/oh-my-opencode-slim-f.json` (or `.jsonc` for comments support) to override models, adjust reasoning effort, or disable agents entirely.
 
 ### Alternative: Ask Any Coding Agent
 
@@ -85,14 +85,14 @@ Paste this into Claude Code, AmpCode, Cursor, or any coding agent:
 
 ```
 Install and configure by following the instructions here:
-https://raw.githubusercontent.com/thuxeko/oh-my-opencode-slim-f/master/README.md
+https://raw.githubusercontent.com/thuxeko/oh-my-opencode-slim-f-f/master/README.md
 ```
 
 ---
 
 ## For LLM Agents
 
-If you're an LLM Agent helping set up oh-my-opencode-slim-f, follow these steps.
+If you're an LLM Agent helping set up oh-my-opencode-slim-f-f, follow these steps.
 
 ### Step 1: Check OpenCode Installation
 
@@ -129,7 +129,7 @@ bunx oh-my-opencode-slim-f@latest install --reset
 The installer automatically:
 - Adds the plugin to `~/.config/opencode/opencode.json`
 - Disables default OpenCode agents
-- Generates agent model mappings in `~/.config/opencode/oh-my-opencode-slim.json` (or `.jsonc`)
+- Generates agent model mappings in `~/.config/opencode/oh-my-opencode-slim-f.json` (or `.jsonc`)
 
 ### Step 3: Authenticate with Providers
 
@@ -150,9 +150,9 @@ Ask the user to:
 Verify all agents respond successfully.
 
 **Crucial Advice for the User:**
-- They can easily assign **different models to different agents** by editing `~/.config/opencode/oh-my-opencode-slim.json` (or `.jsonc`).
+- They can easily assign **different models to different agents** by editing `~/.config/opencode/oh-my-opencode-slim-f.json` (or `.jsonc`).
 - If they want to add a different provider later (Kimi, GitHub Copilot, ZAI), they can update this file manually. See **[Provider Configurations](provider-configurations.md)** for examples.
-- Read the generated `~/.config/opencode/oh-my-opencode-slim.json` (or `.jsonc`) file to understand the current configuration.
+- Read the generated `~/.config/opencode/oh-my-opencode-slim-f.json` (or `.jsonc`) file to understand the current configuration.
 
 ---
 
@@ -166,7 +166,7 @@ bunx oh-my-opencode-slim-f@latest install --help
 ```
 
 Then manually create the config files at:
-- `~/.config/opencode/oh-my-opencode-slim.json` (or `.jsonc`)
+- `~/.config/opencode/oh-my-opencode-slim-f.json` (or `.jsonc`)
 
 ### Configuration Already Exists
 
@@ -189,7 +189,7 @@ If the installer reports that the configuration already exists, you have two opt
 
 2. Verify your config file exists and is valid:
    ```bash
-   cat ~/.config/opencode/oh-my-opencode-slim.json
+   cat ~/.config/opencode/oh-my-opencode-slim-f.json
    ```
 
 3. Check that your provider is configured in `~/.config/opencode/opencode.json`
@@ -210,7 +210,7 @@ If providers are not working:
 
 3. Verify your config file has the correct provider configuration:
    ```bash
-   cat ~/.config/opencode/oh-my-opencode-slim.json
+   cat ~/.config/opencode/oh-my-opencode-slim-f.json
    ```
 
 ### Editor Validation
@@ -219,7 +219,7 @@ Add a `$schema` reference to your config for autocomplete and inline validation:
 
 ```jsonc
 {
-  "$schema": "https://unpkg.com/oh-my-opencode-slim-f@latest/oh-my-opencode-slim.schema.json",
+  "$schema": "https://unpkg.com/oh-my-opencode-slim-f@latest/oh-my-opencode-slim-f.schema.json",
   // your config...
 }
 ```
@@ -244,12 +244,12 @@ See the [Multiplexer Integration Guide](multiplexer-integration.md) for more det
 
 1. **Remove the plugin from your OpenCode config**:
 
-   Edit `~/.config/opencode/opencode.json` and remove `"oh-my-opencode-slim"` from the `plugin` array.
+   Edit `~/.config/opencode/opencode.json` and remove `"oh-my-opencode-slim-f"` from the `plugin` array.
 
 2. **Remove configuration files (optional)**:
    ```bash
-   rm -f ~/.config/opencode/oh-my-opencode-slim.json
-   rm -f ~/.config/opencode/oh-my-opencode-slim.json.bak
+   rm -f ~/.config/opencode/oh-my-opencode-slim-f.json
+   rm -f ~/.config/opencode/oh-my-opencode-slim-f.json.bak
    ```
 
 3. **Remove skills (optional)**:

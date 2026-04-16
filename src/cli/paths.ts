@@ -63,11 +63,11 @@ export function getConfigJsonc(): string {
 }
 
 export function getLiteConfig(): string {
-  return join(getConfigDir(), 'oh-my-opencode-slim.json');
+  return join(getConfigDir(), 'oh-my-opencode-slim-f.json');
 }
 
 export function getLiteConfigJsonc(): string {
-  return join(getConfigDir(), 'oh-my-opencode-slim.jsonc');
+  return join(getConfigDir(), 'oh-my-opencode-slim-f.jsonc');
 }
 
 export function getExistingLiteConfigPath(): string {

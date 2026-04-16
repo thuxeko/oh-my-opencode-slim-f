@@ -1,6 +1,6 @@
 # Multiplexer Integration Guide
 
-Complete guide for using terminal multiplexer integration (Tmux or Zellij) with oh-my-opencode-slim to watch agents work in real-time through automatic pane spawning.
+Complete guide for using terminal multiplexer integration (Tmux or Zellij) with oh-my-opencode-slim-f to watch agents work in real-time through automatic pane spawning.
 
 ## Table of Contents
 
@@ -44,7 +44,7 @@ Complete guide for using terminal multiplexer integration (Tmux or Zellij) with 
 
 ### Step 1: Enable Multiplexer Integration
 
-Edit `~/.config/opencode/oh-my-opencode-slim.json` (or `.jsonc`):
+Edit `~/.config/opencode/oh-my-opencode-slim-f.json` (or `.jsonc`):
 
 **For Tmux:**
 ```json
@@ -105,7 +105,7 @@ That's it! Your agents will now spawn panes automatically.
 
 ### Multiplexer Settings
 
-Configure multiplexer behavior in `~/.config/opencode/oh-my-opencode-slim.json` (or `.jsonc`):
+Configure multiplexer behavior in `~/.config/opencode/oh-my-opencode-slim-f.json` (or `.jsonc`):
 
 ```json
 {
@@ -267,7 +267,7 @@ Ctrl+B d      # detach from current session
 **Solutions:**
 1. **Verify tmux integration is enabled:**
    ```bash
-    cat ~/.config/opencode/oh-my-opencode-slim.json | grep tmux # (or .jsonc)
+    cat ~/.config/opencode/oh-my-opencode-slim-f.json | grep tmux # (or .jsonc)
    ```
 
 2. **Check port configuration:**

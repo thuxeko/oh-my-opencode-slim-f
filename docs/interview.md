@@ -113,7 +113,7 @@ Inside the interview page:
 
 ```jsonc
 {
-  "oh-my-opencode-slim": {
+  "oh-my-opencode-slim-f": {
     "interview": {
       "maxQuestions": 2,
       "outputFolder": "interview",

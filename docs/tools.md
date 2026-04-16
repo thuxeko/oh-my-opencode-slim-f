@@ -98,7 +98,7 @@ Auto-continue the orchestrator when it stops with incomplete todos. Opt-in — n
 - Not in post-abort suppress window (5s)
 - No pending injection already in flight
 
-**Configuration** in `oh-my-opencode-slim.json`:
+**Configuration** in `oh-my-opencode-slim-f.json`:
 
 ```jsonc
 {

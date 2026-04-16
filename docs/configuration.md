@@ -1,6 +1,6 @@
 # Configuration Reference
 
-Complete reference for all configuration files and options in oh-my-opencode-slim-f.
+Complete reference for all configuration files and options in oh-my-opencode-slim-f-f.
 
 ---
 
@@ -54,9 +54,9 @@ In this case:
 | File | Purpose |
 |------|---------|
 | `~/.config/opencode/opencode.json` | OpenCode core settings (plugin registration, providers) |
-| `~/.config/opencode/oh-my-opencode-slim.json` | Plugin settings — agents, tmux, MCPs, council |
-| `~/.config/opencode/oh-my-opencode-slim.jsonc` | Same, but with JSONC (comments + trailing commas). Takes precedence over `.json` if both exist |
-| `.opencode/oh-my-opencode-slim.json` | Project-local overrides (optional, checked first) |
+| `~/.config/opencode/oh-my-opencode-slim-f.json` | Plugin settings — agents, tmux, MCPs, council |
+| `~/.config/opencode/oh-my-opencode-slim-f.jsonc` | Same, but with JSONC (comments + trailing commas). Takes precedence over `.json` if both exist |
+| `.opencode/oh-my-opencode-slim-f.json` | Project-local overrides (optional, checked first) |
 
 > **💡 JSONC recommended:** Use the `.jsonc` extension to add comments and trailing commas. If both `.jsonc` and `.json` exist, `.jsonc` takes precedence.
 
@@ -64,19 +64,19 @@ In this case:
 
 ## Prompt Overriding
 
-Customize agent prompts without modifying source code. Create markdown files in `~/.config/opencode/oh-my-opencode-slim/`:
+Customize agent prompts without modifying source code. Create markdown files in `~/.config/opencode/oh-my-opencode-slim-f/`:
 
 | File | Effect |
 |------|--------|
 | `{agent}.md` | Replaces the agent's default prompt entirely |
 | `{agent}_append.md` | Appends custom instructions to the default prompt |
 
-When a `preset` is active, the plugin checks `~/.config/opencode/oh-my-opencode-slim/{preset}/` first, then falls back to the root directory.
+When a `preset` is active, the plugin checks `~/.config/opencode/oh-my-opencode-slim-f/{preset}/` first, then falls back to the root directory.
 
 **Example directory structure:**
 
 ```
-~/.config/opencode/oh-my-opencode-slim/
+~/.config/opencode/oh-my-opencode-slim-f/
   ├── best/
   │   ├── orchestrator.md        # Preset-specific override (used when preset=best)
   │   └── explorer_append.md
