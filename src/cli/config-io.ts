@@ -21,7 +21,7 @@ import type {
   OpenCodeConfig,
 } from './types';
 
-const PACKAGE_NAME = 'oh-my-opencode-slim-f-f';
+const PACKAGE_NAME = 'oh-my-opencode-slim-f';
 
 function normalizePathForMatch(path: string): string {
   return path.replaceAll('\\', '/');

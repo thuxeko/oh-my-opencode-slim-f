@@ -240,7 +240,7 @@ const OhMyOpenCodeLite: Plugin = async (ctx) => {
   const interviewManager = createInterviewManager(ctx, config);
 
   return {
-    name: 'oh-my-opencode-slim-f-f',
+    name: 'oh-my-opencode-slim-f',
 
     agent: agents,
 

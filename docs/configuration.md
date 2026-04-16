@@ -1,6 +1,6 @@
 # Configuration Reference
 
-Complete reference for all configuration files and options in oh-my-opencode-slim-f-f.
+Complete reference for all configuration files and options in oh-my-opencode-slim-f.
 
 ---
 

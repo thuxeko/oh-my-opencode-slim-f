@@ -2,7 +2,7 @@
   "$schema": "https://biomejs.dev/schemas/2.4.2/schema.json",
   "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "files": {
-    "includes": ["**", "!oh-my-opencode-slim-f-f.schema.json"]
+    "includes": ["**", "!oh-my-opencode-slim-f.schema.json"]
   },
   "vcs": {
     "enabled": true,

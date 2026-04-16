@@ -1,6 +1,6 @@
 # Installation Guide
 
-Complete installation instructions for oh-my-opencode-slim-f-f.
+Complete installation instructions for oh-my-opencode-slim-f.
 
 ## Table of Contents
 
@@ -85,14 +85,14 @@ Paste this into Claude Code, AmpCode, Cursor, or any coding agent:
 
 ```
 Install and configure by following the instructions here:
-https://raw.githubusercontent.com/thuxeko/oh-my-opencode-slim-f-f/master/README.md
+https://raw.githubusercontent.com/thuxeko/oh-my-opencode-slim-f/master/README.md
 ```
 
 ---
 
 ## For LLM Agents
 
-If you're an LLM Agent helping set up oh-my-opencode-slim-f-f, follow these steps.
+If you're an LLM Agent helping set up oh-my-opencode-slim-f, follow these steps.
 
 ### Step 1: Check OpenCode Installation
 
