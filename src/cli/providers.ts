@@ -125,19 +125,19 @@ export function generateLiteConfig(
     
     (config.presets as Record<string, unknown>)[presetName] = presetConfig;
     
-    // Generate fallback config with empty chains (users can fill in later)
+    // Generate fallback config with default.model in all chains (but disabled)
     config.fallback = {
-      enabled: true,  // Enable fallback by default
+      enabled: false,  // Disabled since we have default.model
       chains: {
-        orchestrator: [],
-        oracle: [],
-        librarian: [],
-        explorer: [],
-        designer: [],
-        fixer: [],
-        council: [],
-        'council-master': [],
-        councillor: []
+        orchestrator: [defaultModel],
+        oracle: [defaultModel],
+        librarian: [defaultModel],
+        explorer: [defaultModel],
+        designer: [defaultModel],
+        fixer: [defaultModel],
+        council: [defaultModel],
+        'council-master': [defaultModel],
+        councillor: [defaultModel]
       }
     };
     
@@ -162,21 +162,9 @@ export function generateLiteConfig(
     config.preset = 'openai';
     (config.presets as Record<string, unknown>).openai = buildPreset('openai');
     
-    // Also generate fallback and council for OpenAI users
-    config.fallback = {
-      enabled: true,  // Enable fallback by default
-      chains: {
-        orchestrator: [],
-        oracle: [],
-        librarian: [],
-        explorer: [],
-        designer: [],
-        fixer: [],
-        council: [],
-        'council-master': [],
-        councillor: []
-      }
-    };
+    // Don't generate fallback for OpenAI preset (no default.model)
+    // Users can add fallback manually if needed
+    // config.fallback is omitted
     
     // Council with OpenAI models
     config.council = {
