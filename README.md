@@ -13,7 +13,11 @@
 
 ---
 
+<<<<<<< HEAD
 > 📌 **This is a fork of [oh-my-opencode-slim](https://github.com/alvinunreal/oh-my-opencode-slim)** by [Alvin (@alvinunreal)](https://github.com/alvinunreal). Special thanks to the author for creating this useful plugin!
+=======
+> 📌 **This is a maintained fork of the original [oh-my-opencode-slim](https://github.com/alvinunreal/oh-my-opencode-slim) by Alvin (@alvinunreal).** Special thanks to the original author for creating this useful plugin! This version includes fixes and improvements specific to this fork.
+>>>>>>> 1eff879 (fix: update github.com/alvinunreal references to thuxeko)
 
 ---
 
