@@ -278,6 +278,7 @@ export async function install(args: InstallArgs): Promise<number> {
     installCustomSkills: args.skills === 'yes',
     dryRun: args.dryRun,
     reset: args.reset ?? false,
+    defaultModel: args.defaultModel,
   };
 
   return runInstall(config);
