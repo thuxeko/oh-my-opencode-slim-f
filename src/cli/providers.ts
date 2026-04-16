@@ -146,19 +146,15 @@ export function generateLiteConfig(
       master: { model: defaultModel },
       presets: {
         default: {
-          councillors: {
-            alpha: { model: defaultModel },
-            beta: { model: defaultModel },
-            gamma: { model: defaultModel }
-          },
-          master: undefined
+          alpha: { model: defaultModel },
+          beta: { model: defaultModel },
+          gamma: { model: defaultModel }
         }
       },
       default_preset: 'default',
       master_timeout: 300000,
       councillors_timeout: 180000,
       master_fallback: [],
-      councillor_execution_mode: 'parallel',
       councillor_retries: 3
     };
   } else {
@@ -187,19 +183,15 @@ export function generateLiteConfig(
       master: { model: 'openai/gpt-5.4' },
       presets: {
         default: {
-          councillors: {
-            alpha: { model: 'openai/gpt-5.4-mini' },
-            beta: { model: 'openai/gpt-5.4-mini' },
-            gamma: { model: 'openai/gpt-5.4-mini' }
-          },
-          master: undefined
+          alpha: { model: 'openai/gpt-5.4-mini' },
+          beta: { model: 'openai/gpt-5.4-mini' },
+          gamma: { model: 'openai/gpt-5.4-mini' }
         }
       },
       default_preset: 'default',
       master_timeout: 300000,
       councillors_timeout: 180000,
       master_fallback: [],
-      councillor_execution_mode: 'parallel',
       councillor_retries: 3
     };
   }
