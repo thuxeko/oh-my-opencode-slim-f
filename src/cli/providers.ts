@@ -85,36 +85,52 @@ export function generateLiteConfig(
     );
   };
 
-  // If --default-model was provided, create a custom preset with that model
+  // If --default-model was provided, set default.model and create clean preset
   if (installConfig.defaultModel) {
     const defaultModel = installConfig.defaultModel;
-    // Create a custom preset name based on the model
-    const presetName = 'custom';
+    const presetName = 'default';
     config.preset = presetName;
     
-    // Create preset with the custom model for all agents
-    const customMapping = {
-      orchestrator: { model: defaultModel },
-      oracle: { model: defaultModel, variant: 'high' },
-      librarian: { model: defaultModel, variant: 'low' },
-      explorer: { model: defaultModel, variant: 'low' },
-      designer: { model: defaultModel, variant: 'medium' },
-      fixer: { model: defaultModel, variant: 'low' },
-    };
-    
-    (config.presets as Record<string, unknown>)[presetName] = Object.fromEntries(
-      Object.entries(customMapping).map(([agentName, modelInfo]) => [
-        agentName,
-        createAgentConfig(agentName, modelInfo),
-      ]),
-    );
-    
-    // Also add default.model for fallback
+    // Set default.model - all agents will inherit this
     config.default = {
       model: defaultModel,
     };
+    
+    // Create preset with agents but without explicit models (they'll use default.model)
+    const agentNames = ['orchestrator', 'oracle', 'librarian', 'explorer', 'designer', 'fixer'];
+    const presetConfig: Record<string, unknown> = {};
+    
+    for (const agentName of agentNames) {
+      const isOrchestrator = agentName === 'orchestrator';
+      const skills = isOrchestrator
+        ? ['*']
+        : RECOMMENDED_SKILLS.filter(
+            (s) =>
+              s.allowedAgents.includes('*') ||
+              s.allowedAgents.includes(agentName),
+          ).map((s) => s.skillName);
+      
+      if (agentName === 'designer' && !skills.includes('agent-browser')) {
+        skills.push('agent-browser');
+      }
+      
+      presetConfig[agentName] = {
+        // No model field - will use default.model
+        variant: agentName === 'oracle' ? 'high' : 
+                agentName === 'designer' ? 'medium' : 'low',
+        skills,
+        mcps: DEFAULT_AGENT_MCPS[agentName as keyof typeof DEFAULT_AGENT_MCPS] ?? [],
+      };
+    }
+    
+    (config.presets as Record<string, unknown>)[presetName] = presetConfig;
+    
+    // Disable fallback by default
+    config.fallback = {
+      enabled: false,
+    };
   } else {
-    // No --default-model, use OpenAI as default
+    // No --default-model, use OpenAI as default with explicit models
     config.preset = 'openai';
     (config.presets as Record<string, unknown>).openai = buildPreset('openai');
   }
