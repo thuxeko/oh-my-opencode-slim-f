@@ -184,6 +184,8 @@ async function runInstall(config: InstallConfig): Promise<number> {
         )
       )
         return 1;
+      // Debug: show where config was written
+      printInfo(`Config written to: ${liteResult.configPath}`);
     }
   }
 
